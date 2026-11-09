@@ -21,8 +21,7 @@ def train_model_1(df_coffee):
     lm_0 = LinearRegression()
     lm_0.fit(X, y)
 
-    y_pred = lm_0.predict(X)
-    return y_pred
+    return lm_0
 
 
 if __name__ == '__main__':
