@@ -13,7 +13,7 @@ def get_coffee_data():
 def train_model_1(df_coffee):
 
     df_train, df_test = train_test_split(df_coffee, test_size=.2)
-    df_test.to_csv('./data/model_1_holdout_set.csv')
+    # df_test.to_csv('./data/model_1_holdout_set.csv')
 
     X = df_train[['100g_USD']]
     y = df_train['rating']
