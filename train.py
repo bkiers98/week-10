@@ -10,8 +10,7 @@ def get_coffee_data():
     
     return df_coffee
 
-def model_1():
-    df_coffee = get_coffee_data()
+def train_model_1(df_coffee):
 
     df_train, df_test = train_test_split(df_coffee, test_size=.2)
     df_test.to_csv('./data/model_1_holdout_set.csv')
@@ -22,7 +21,15 @@ def model_1():
     lm_0 = LinearRegression()
     lm_0.fit(X, y)
 
-    with open('./model_1.pickle', 'wb') as f:
-        pickle.dump(lm_0, f)
-
     y_pred = lm_0.predict(X)
+    return lm_0
+
+
+if __name__ == '__main__':
+    df_coffee = get_coffee_data()
+
+    model_1 = train_model_1(df_coffee)
+
+    with open('./model_1.pickle', 'wb') as f:
+        pickle.dump(model_1, f)
+
