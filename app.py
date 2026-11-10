@@ -5,17 +5,24 @@ from apputil import *
 
 st.write(
 '''
-# Week x: [Title]
+# Week 10: Supervised Learning
 
 ...
 ''')
 
-# currently set for integer input
-amount = st.number_input("Exercise Input: ", 
-                         value=None, 
-                         step=1, 
-                         format="%d")
+MODELPATH_1 = './model_1.pickle'
+MODELPATH_2 = './model_2.pickle'
 
-if amount is not None:
-    st.write(f"The exercise input was {amount}.")
+@st.cache_resource
+def get_model_1():
+    with open(MODELPATH_1, 'rb') as f:
+        model_1 = pickle.load(f)
 
+    return model_1
+
+@st.cache_resource
+def get_model_2():
+    with open(MODELPATH_2, 'rb') as f:
+        model_2 = pickle.load(f)
+
+    return model_2
