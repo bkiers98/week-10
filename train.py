@@ -1,3 +1,4 @@
+import numpy as np
 import pickle
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -20,15 +21,25 @@ def train_model_1(df_coffee):
 
     return lm
 
-def roast_category(df):
-    """Adds a coded column that matches the categorical roast column"""
-    df['roast_cat'] = df['roast'].astype('category').cat.codes
+def roast_category(roast):
+    """Assigns numerical category to incoming roast strings"""
+    roast_codes = {
+        'Light': 0,
+        'Medium-Light': 1,
+        'Medium': 2,
+        'Medium-Dark': 3,
+        'Dark': 4,
+    }
 
-    return None
+    try:
+        return roast_codes[roast]
+    except KeyError:
+        return np.nan
 
 def train_model_2(df_coffee):
     """Trains a decision tree regressor model on df_coffee"""
-    roast_category(df_coffee)
+    df_coffee = df_coffee.copy()
+    df_coffee['roast_cat'] = df_coffee['roast'].map(roast_category)
 
     X = df_coffee[['100g_USD', 'roast_cat']]
     y = df_coffee['rating']
@@ -37,7 +48,6 @@ def train_model_2(df_coffee):
     dtr.fit(X, y)
 
     return dtr
-
 
 if __name__ == '__main__':
     df_coffee = get_coffee_data()
